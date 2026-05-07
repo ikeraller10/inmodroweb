@@ -1,6 +1,50 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { Rocket, Video, Filter, TrendingUp } from "lucide-react";
+
+const TARGET = 87;
+const DURATION = 1800;
+
+function useAnimatedCount(target: number, duration: number) {
+  const [value, setValue] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || started.current) return;
+        started.current = true;
+
+        const start = performance.now();
+        const easeOutExpo = (t: number) =>
+          t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+
+        let frame = 0;
+        const tick = (now: number) => {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = easeOutExpo(progress);
+          setValue(Math.round(target * eased));
+          if (progress < 1) frame = requestAnimationFrame(tick);
+        };
+        frame = requestAnimationFrame(tick);
+
+        return () => cancelAnimationFrame(frame);
+      },
+      { threshold: 0.4 }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [target, duration]);
+
+  return { value, ref };
+}
 
 const features = [
   { icon: Filter, label: "Filtros extras avanzados" },
@@ -10,6 +54,8 @@ const features = [
 ];
 
 export function Boost() {
+  const { value: progress, ref: progressRef } = useAnimatedCount(TARGET, DURATION);
+
   return (
     <section className="relative py-28 lg:py-40 px-6 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-[#022C22] via-[#064E3B] to-[#022C22]" />
@@ -69,11 +115,18 @@ export function Boost() {
 
         <div className="relative">
           <div className="absolute -inset-10 bg-emerald-500/30 blur-3xl rounded-full" aria-hidden="true" />
-          <div className="relative bg-gradient-to-br from-white/10 to-white/0 backdrop-blur-2xl border border-white/15 rounded-[32px] p-8 shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
+          <div
+            ref={progressRef}
+            className="relative bg-gradient-to-br from-white/10 to-white/0 backdrop-blur-2xl border border-white/15 rounded-[32px] p-8 shadow-[0_30px_80px_rgba(0,0,0,0.5)]"
+          >
             <div className="flex items-center justify-between mb-8">
               <div>
-                <p className="text-emerald-200/60 text-xs uppercase tracking-widest font-bold mb-1">Tu perfil</p>
-                <h3 className="text-white text-2xl font-bold">87% completado</h3>
+                <p className="text-emerald-200/60 text-xs uppercase tracking-widest font-bold mb-1">
+                  Tu perfil
+                </p>
+                <h3 className="text-white text-2xl font-bold tabular-nums">
+                  {progress}% completado
+                </h3>
               </div>
               <div className="bg-gradient-to-br from-emerald-400 to-emerald-600 text-white text-xs font-black uppercase tracking-wider px-3 py-1.5 rounded-full shadow-lg">
                 Boost ON
@@ -81,7 +134,10 @@ export function Boost() {
             </div>
 
             <div className="h-2 bg-white/10 rounded-full overflow-hidden mb-8">
-              <div className="h-full w-[87%] bg-gradient-to-r from-emerald-400 to-teal-300 rounded-full shadow-[0_0_20px_rgba(52,211,153,0.6)]" />
+              <div
+                className="h-full bg-gradient-to-r from-emerald-400 to-teal-300 rounded-full shadow-[0_0_20px_rgba(52,211,153,0.6)] transition-[width] duration-100 ease-out"
+                style={{ width: `${progress}%` }}
+              />
             </div>
 
             <div className="grid grid-cols-3 gap-3 mb-6">
