@@ -53,9 +53,6 @@
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
   }
-  html {
-    scroll-behavior: smooth;
-  }
 }
 
 @layer utilities {

@@ -12,7 +12,7 @@ import { Footer } from "@/components/sections/footer";
 
 export default function HomePage() {
   return (
-    <main className="overflow-x-hidden w-full min-h-screen">
+    <main className="overflow-x-clip w-full min-h-screen">
       <SmoothScroll />
       <Navbar />
       <section id="solucion">
