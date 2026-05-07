@@ -9,7 +9,6 @@ import { Testimonials } from "@/components/sections/testimonials";
 import { FAQs } from "@/components/sections/faqs";
 import { CTAFinal } from "@/components/sections/cta-final";
 import { ScrollMorphHero } from "@/components/ui/scroll-morph-hero";
-import { PulseBeamsSection } from "@/components/sections/pulse-beams-section";
 import { Footer } from "@/components/sections/footer";
 
 export default function HomePage() {
@@ -28,7 +27,6 @@ export default function HomePage() {
       <Testimonials />
       <FAQs />
       <CTAFinal />
-      <PulseBeamsSection />
       <Footer />
     </main>
   );

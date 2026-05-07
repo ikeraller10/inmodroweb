@@ -89,7 +89,7 @@ interface SVGsProps {
   gradientColors?: GradientColorsType;
 }
 
-const SVGs: React.FC<SVGsProps> = ({
+export const SVGs: React.FC<SVGsProps> = ({
   beams,
   width,
   height,
