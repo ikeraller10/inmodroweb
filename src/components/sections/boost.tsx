@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Rocket, Video, Filter, TrendingUp } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Rocket, Video, Filter, TrendingUp, Check } from "lucide-react";
 
 const PROGRESS_TARGET = 87;
 const DURATION = 3800;
@@ -56,6 +57,12 @@ const stats = [
   { target: 4, prefix: "x", suffix: "", label: "Visibilidad" },
   { target: 38, prefix: "+", suffix: "%", label: "Matches" },
   { target: 12, prefix: "", suffix: "", label: "Drops/sem" },
+];
+
+const checklist = [
+  { label: "Vídeo de presentación", threshold: 0.45 },
+  { label: "Filtros avanzados", threshold: 0.7 },
+  { label: "Verificación de identidad", threshold: 0.92 },
 ];
 
 export function Boost() {
@@ -168,27 +175,87 @@ export function Boost() {
             </div>
 
             <div className="space-y-2.5">
-              {[
-                { label: "Vídeo de presentación", done: true },
-                { label: "Filtros avanzados", done: true },
-                { label: "Verificación de identidad", done: false },
-              ].map((item) => (
-                <div
-                  key={item.label}
-                  className={`flex items-center justify-between py-2.5 px-4 rounded-lg ${
-                    item.done ? "bg-emerald-500/10 border border-emerald-400/30" : "bg-white/5 border border-white/10"
-                  }`}
-                >
-                  <span className="text-sm text-white">{item.label}</span>
-                  <span
-                    className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black ${
-                      item.done ? "bg-emerald-400 text-emerald-900" : "bg-white/10 text-white/40"
-                    }`}
+              {checklist.map((item) => {
+                const done = t >= item.threshold;
+                return (
+                  <motion.div
+                    key={item.label}
+                    animate={{
+                      backgroundColor: done
+                        ? "rgba(16, 185, 129, 0.10)"
+                        : "rgba(255, 255, 255, 0.05)",
+                      borderColor: done
+                        ? "rgba(52, 211, 153, 0.30)"
+                        : "rgba(255, 255, 255, 0.10)",
+                    }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                    className="flex items-center justify-between py-2.5 px-4 rounded-lg border"
                   >
-                    {item.done ? "✓" : "+"}
-                  </span>
-                </div>
-              ))}
+                    <span className="text-sm text-white">{item.label}</span>
+                    <motion.span
+                      animate={{
+                        backgroundColor: done
+                          ? "rgb(52, 211, 153)"
+                          : "rgba(255, 255, 255, 0.10)",
+                      }}
+                      transition={{ duration: 0.4 }}
+                      className="relative w-5 h-5 rounded-full flex items-center justify-center overflow-hidden"
+                    >
+                      {done && (
+                        <motion.span
+                          aria-hidden="true"
+                          initial={{ scale: 0, opacity: 0 }}
+                          animate={{ scale: [0, 1.4, 1], opacity: 1 }}
+                          transition={{
+                            duration: 0.55,
+                            ease: [0.34, 1.56, 0.64, 1],
+                            times: [0, 0.6, 1],
+                          }}
+                          className="absolute inset-0 rounded-full bg-emerald-300"
+                          style={{ filter: "blur(6px)" }}
+                        />
+                      )}
+                      <AnimatePresence mode="wait" initial={false}>
+                        {done ? (
+                          <motion.span
+                            key="check"
+                            initial={{ scale: 0, rotate: -120, opacity: 0 }}
+                            animate={{
+                              scale: 1,
+                              rotate: 0,
+                              opacity: 1,
+                            }}
+                            exit={{ scale: 0, opacity: 0 }}
+                            transition={{
+                              type: "spring",
+                              stiffness: 550,
+                              damping: 14,
+                              mass: 0.6,
+                            }}
+                            className="relative z-10 text-emerald-900"
+                          >
+                            <Check
+                              className="w-3 h-3"
+                              strokeWidth={3.5}
+                              aria-label="Completado"
+                            />
+                          </motion.span>
+                        ) : (
+                          <motion.span
+                            key="empty"
+                            initial={{ scale: 0.6, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="relative z-10 w-1.5 h-1.5 rounded-full bg-white/40"
+                            aria-hidden="true"
+                          />
+                        )}
+                      </AnimatePresence>
+                    </motion.span>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </div>
