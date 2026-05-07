@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import { Quote, Star } from "lucide-react";
 
 const testimonials = [
@@ -29,6 +30,56 @@ const testimonials = [
   },
 ];
 
+interface HolographicCardProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+function HolographicCard({ children, className }: HolographicCardProps) {
+  const cardRef = useRef<HTMLElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const card = cardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const rotateX = ((y - rect.height / 2) / rect.height) * -16;
+    const rotateY = ((x - rect.width / 2) / rect.width) * 16;
+    card.style.setProperty("--mx", `${(x / rect.width) * 100}%`);
+    card.style.setProperty("--my", `${(y / rect.height) * 100}%`);
+    card.style.transform = `perspective(1200px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
+  };
+
+  const handleMouseLeave = () => {
+    const card = cardRef.current;
+    if (!card) return;
+    card.style.transform = "perspective(1200px) rotateX(0deg) rotateY(0deg)";
+    card.style.setProperty("--mx", "50%");
+    card.style.setProperty("--my", "50%");
+  };
+
+  return (
+    <article
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={
+        {
+          transformStyle: "preserve-3d",
+          transition: "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease-out",
+          willChange: "transform",
+          "--mx": "50%",
+          "--my": "50%",
+        } as React.CSSProperties
+      }
+      className={className}
+    >
+      {children}
+    </article>
+  );
+}
+
 export function Testimonials() {
   return (
     <section className="relative py-28 lg:py-40 px-6 bg-white overflow-hidden">
@@ -47,38 +98,66 @@ export function Testimonials() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8" style={{ perspective: "1500px" }}>
           {testimonials.map((t, i) => (
-            <article
+            <HolographicCard
               key={i}
-              className="group relative bg-gradient-to-br from-emerald-50/50 to-white border border-emerald-100/80 rounded-3xl p-8 lg:p-10 shadow-[0_4px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_30px_80px_rgba(16,185,129,0.15)] hover:-translate-y-1 transition-all duration-500"
+              className="group relative bg-gradient-to-br from-emerald-50/50 to-white border border-emerald-100/80 rounded-3xl p-8 lg:p-10 shadow-[0_4px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_40px_90px_rgba(16,185,129,0.22)]"
             >
-              <Quote className="absolute top-7 right-7 w-10 h-10 text-emerald-200" strokeWidth={1.5} />
+              {/* Holographic radial glow that follows the cursor */}
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{
+                  background:
+                    "radial-gradient(420px circle at var(--mx) var(--my), rgba(16,185,129,0.18), rgba(167,243,208,0.06) 35%, transparent 60%)",
+                }}
+              />
 
-              <div className="flex items-center gap-1 mb-5">
-                {[...Array(5)].map((_, j) => (
-                  <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                ))}
-              </div>
+              {/* Diagonal sheen for the 'holo' shimmer */}
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 mix-blend-overlay"
+                style={{
+                  background:
+                    "linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.45) 50%, transparent 65%)",
+                  backgroundSize: "200% 200%",
+                  backgroundPosition: "var(--mx) var(--my)",
+                }}
+              />
 
-              <p className="text-lg lg:text-xl text-foreground/80 leading-relaxed mb-8 font-medium text-balance">
-                &ldquo;{t.text}&rdquo;
-              </p>
-
-              <div className="flex items-center gap-4 pt-5 border-t border-emerald-100">
-                <div
-                  className="w-12 h-12 rounded-full bg-cover bg-center ring-2 ring-emerald-200 ring-offset-2"
-                  style={{ backgroundImage: `url(${t.avatar})` }}
-                  aria-hidden="true"
+              {/* 3D-lifted content */}
+              <div className="relative" style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }}>
+                <Quote
+                  className="absolute -top-1 right-0 w-10 h-10 text-emerald-200"
+                  strokeWidth={1.5}
                 />
-                <div>
-                  <p className="font-bold text-base">{t.name}</p>
-                  <p className="text-xs text-emerald-600 font-semibold uppercase tracking-wider">
-                    {t.role}
-                  </p>
+
+                <div className="flex items-center gap-1 mb-5">
+                  {[...Array(5)].map((_, j) => (
+                    <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+
+                <p className="text-lg lg:text-xl text-foreground/80 leading-relaxed mb-8 font-medium text-balance">
+                  &ldquo;{t.text}&rdquo;
+                </p>
+
+                <div className="flex items-center gap-4 pt-5 border-t border-emerald-100">
+                  <div
+                    className="w-12 h-12 rounded-full bg-cover bg-center ring-2 ring-emerald-200 ring-offset-2"
+                    style={{ backgroundImage: `url(${t.avatar})` }}
+                    aria-hidden="true"
+                  />
+                  <div>
+                    <p className="font-bold text-base">{t.name}</p>
+                    <p className="text-xs text-emerald-600 font-semibold uppercase tracking-wider">
+                      {t.role}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </article>
+            </HolographicCard>
           ))}
         </div>
       </div>
