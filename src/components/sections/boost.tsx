@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Rocket, Video, Filter, TrendingUp } from "lucide-react";
 
 const TARGET = 87;
-const DURATION = 1800;
+const DURATION = 3800;
 
 function useAnimatedCount(target: number, duration: number) {
   const [value, setValue] = useState(0);
@@ -21,14 +21,16 @@ function useAnimatedCount(target: number, duration: number) {
         started.current = true;
 
         const start = performance.now();
-        const easeOutExpo = (t: number) =>
-          t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+        const easeInOutCubic = (t: number) =>
+          t < 0.5
+            ? 4 * t * t * t
+            : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
         let frame = 0;
         const tick = (now: number) => {
           const elapsed = now - start;
           const progress = Math.min(elapsed / duration, 1);
-          const eased = easeOutExpo(progress);
+          const eased = easeInOutCubic(progress);
           setValue(Math.round(target * eased));
           if (progress < 1) frame = requestAnimationFrame(tick);
         };
