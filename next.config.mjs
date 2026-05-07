@@ -1,11 +1,13 @@
 /** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === "production";
+const repo = "inmodroweb";
+
 const nextConfig = {
-  images: {
-    remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com" },
-      { protocol: "https", hostname: "i.pravatar.cc" },
-    ],
-  },
+  output: "export",
+  images: { unoptimized: true },
+  basePath: isProd ? `/${repo}` : "",
+  assetPrefix: isProd ? `/${repo}/` : "",
+  trailingSlash: true,
 };
 
 export default nextConfig;
