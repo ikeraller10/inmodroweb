@@ -19,6 +19,7 @@ export default function HomePage() {
       <section id="solucion">
         <CinematicHero />
       </section>
+      <ScrollMorphHero />
       <HowItWorks />
       <Profiles />
       <Benefits />
@@ -26,7 +27,6 @@ export default function HomePage() {
       <Testimonials />
       <FAQs />
       <CTAFinal />
-      <ScrollMorphHero />
       <Footer />
     </main>
   );
