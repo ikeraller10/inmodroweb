@@ -1,6 +1,6 @@
 "use client";
 
-import { Home } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { PulseBeams, type BeamPath, type GradientColorsType } from "@/components/ui/pulse-beams";
 
 const beams: BeamPath[] = [
@@ -154,19 +154,26 @@ export function PulseBeamsSection() {
         gradientColors={gradientColors}
         className="min-h-[460px]"
       >
-        <button className="z-40 group cursor-pointer relative shadow-2xl shadow-emerald-900/60 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block bg-emerald-900">
+        <a
+          href="#registro"
+          className="z-40 group cursor-pointer relative shadow-2xl shadow-emerald-900/60 rounded-full p-px text-xs font-semibold leading-6 text-white inline-block bg-emerald-900 hover:-translate-y-1 transition-transform duration-300"
+        >
           <span className="absolute inset-0 overflow-hidden rounded-full">
             <span className="absolute inset-0 rounded-full bg-[image:radial-gradient(75%_100%_at_50%_0%,rgba(52,211,153,0.6)_0%,rgba(52,211,153,0)_75%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
           </span>
-          <div className="relative flex justify-center items-center gap-3 w-[280px] h-[100px] z-10 rounded-full bg-[#031F18] py-0.5 px-6 ring-1 ring-emerald-400/15">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/40 shrink-0">
-              <Home className="w-6 h-6 text-white" strokeWidth={2.5} />
-            </div>
-            <span className="text-2xl md:text-3xl font-extrabold tracking-tight inline-block bg-clip-text text-transparent bg-gradient-to-r from-emerald-200 via-white to-emerald-200">
-              Inmodrop
+          <div className="relative flex flex-col justify-center items-center gap-1 w-[300px] h-[110px] z-10 rounded-full bg-[#031F18] py-2 px-8 ring-1 ring-emerald-400/15">
+            <span className="text-xl md:text-2xl font-extrabold tracking-tight inline-flex items-center gap-2 bg-clip-text text-transparent bg-gradient-to-r from-emerald-200 via-white to-emerald-200">
+              Empieza tu match
+              <ArrowRight
+                className="w-5 h-5 text-emerald-200 transition-transform duration-300 group-hover:translate-x-1"
+                strokeWidth={2.5}
+              />
+            </span>
+            <span className="text-[11px] uppercase tracking-[0.25em] font-bold text-emerald-300/80">
+              Crea tu perfil · Gratis
             </span>
           </div>
-        </button>
+        </a>
       </PulseBeams>
     </section>
   );
