@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, Sparkles } from "lucide-react";
+import { BubbleText } from "@/components/ui/bubble-text";
 
 export function CTAFinal() {
   return (
@@ -15,11 +16,10 @@ export function CTAFinal() {
           Empezar ahora · Es gratis
         </span>
 
-        <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-6 text-balance">
-          ¿Estás listo para hacer match
-          <br />
-          con tu próximo hogar?
-        </h2>
+        <BubbleText
+          text={"¿Estás listo para hacer match\ncon tu próximo hogar?"}
+          className="text-4xl md:text-6xl lg:text-7xl mb-6 text-balance"
+        />
 
         <p className="text-white/80 text-lg lg:text-xl max-w-2xl mx-auto font-light leading-relaxed mb-12">
           Crea tu perfil en menos de 2 minutos y empieza a recibir Drops compatibles contigo. Miles ya están haciendo match.
