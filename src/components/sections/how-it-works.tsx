@@ -1,6 +1,7 @@
 "use client";
 
 import { UserPlus, Sparkles, Heart, MessageCircle, ArrowRight } from "lucide-react";
+import { GlowCard } from "@/components/ui/spotlight-card";
 
 const steps = [
   {
@@ -31,7 +32,10 @@ const steps = [
 
 export function HowItWorks() {
   return (
-    <section id="como-funciona" className="relative py-28 lg:py-40 px-6 overflow-hidden bg-gradient-to-b from-white via-emerald-50/40 to-white">
+    <section
+      id="como-funciona"
+      className="relative py-28 lg:py-40 px-6 overflow-hidden bg-gradient-to-b from-white via-emerald-50/40 to-white"
+    >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(16,185,129,0.08),transparent_50%)] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative">
@@ -49,28 +53,36 @@ export function HowItWorks() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7 lg:gap-6">
           {steps.map((step, i) => {
             const Icon = step.icon;
             return (
               <div key={i} className="relative group">
-                <div className="relative bg-white border border-emerald-100/80 rounded-3xl p-7 h-full shadow-[0_4px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_60px_rgba(16,185,129,0.15)] hover:-translate-y-2 transition-all duration-500">
-                  <div className="absolute top-5 right-5 text-7xl font-black text-emerald-50 leading-none select-none">
-                    0{i + 1}
+                <GlowCard
+                  glowColor="green"
+                  customSize
+                  className="w-full h-full min-h-[260px] p-7 transition-transform duration-500 hover:-translate-y-2"
+                >
+                  <div className="relative z-10 h-full flex flex-col">
+                    <div className="absolute top-1 right-1 text-7xl font-black text-emerald-100/70 leading-none select-none pointer-events-none">
+                      0{i + 1}
+                    </div>
+                    <div
+                      className={`relative w-14 h-14 rounded-2xl bg-gradient-to-br ${step.accent} flex items-center justify-center shadow-lg shadow-emerald-500/30 mb-5`}
+                    >
+                      <Icon className="w-7 h-7 text-white" strokeWidth={2.5} />
+                    </div>
+                    <h3 className="relative text-xl font-bold mb-2 tracking-tight">
+                      {step.title}
+                    </h3>
+                    <p className="relative text-sm text-foreground/60 leading-relaxed">
+                      {step.desc}
+                    </p>
                   </div>
-                  <div className={`relative w-14 h-14 rounded-2xl bg-gradient-to-br ${step.accent} flex items-center justify-center shadow-lg mb-5`}>
-                    <Icon className="w-7 h-7 text-white" strokeWidth={2.5} />
-                  </div>
-                  <h3 className="relative text-xl font-bold mb-2 tracking-tight">
-                    {step.title}
-                  </h3>
-                  <p className="relative text-sm text-foreground/60 leading-relaxed">
-                    {step.desc}
-                  </p>
-                </div>
+                </GlowCard>
 
                 {i < steps.length - 1 && (
-                  <ArrowRight className="hidden lg:block absolute top-1/2 -right-2 -translate-y-1/2 w-5 h-5 text-emerald-300 z-10" />
+                  <ArrowRight className="hidden lg:block absolute top-1/2 -right-4 -translate-y-1/2 w-5 h-5 text-emerald-400 z-10 drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
                 )}
               </div>
             );
