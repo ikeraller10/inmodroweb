@@ -3,11 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Rocket, Video, Filter, TrendingUp } from "lucide-react";
 
-const TARGET = 87;
+const PROGRESS_TARGET = 87;
 const DURATION = 3800;
 
-function useAnimatedCount(target: number, duration: number) {
-  const [value, setValue] = useState(0);
+function useAnimatedProgress(duration: number) {
+  const [t, setT] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
   const started = useRef(false);
 
@@ -21,17 +21,14 @@ function useAnimatedCount(target: number, duration: number) {
         started.current = true;
 
         const start = performance.now();
-        const easeInOutCubic = (t: number) =>
-          t < 0.5
-            ? 4 * t * t * t
-            : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        const easeInOutCubic = (x: number) =>
+          x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 
         let frame = 0;
         const tick = (now: number) => {
           const elapsed = now - start;
           const progress = Math.min(elapsed / duration, 1);
-          const eased = easeInOutCubic(progress);
-          setValue(Math.round(target * eased));
+          setT(easeInOutCubic(progress));
           if (progress < 1) frame = requestAnimationFrame(tick);
         };
         frame = requestAnimationFrame(tick);
@@ -43,9 +40,9 @@ function useAnimatedCount(target: number, duration: number) {
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, [target, duration]);
+  }, [duration]);
 
-  return { value, ref };
+  return { t, ref };
 }
 
 const features = [
@@ -55,8 +52,15 @@ const features = [
   { icon: Rocket, label: "Drops mejor filtrados y prioritarios" },
 ];
 
+const stats = [
+  { target: 4, prefix: "x", suffix: "", label: "Visibilidad" },
+  { target: 38, prefix: "+", suffix: "%", label: "Matches" },
+  { target: 12, prefix: "", suffix: "", label: "Drops/sem" },
+];
+
 export function Boost() {
-  const { value: progress, ref: progressRef } = useAnimatedCount(TARGET, DURATION);
+  const { t, ref: progressRef } = useAnimatedProgress(DURATION);
+  const progress = Math.round(PROGRESS_TARGET * t);
 
   return (
     <section className="relative py-28 lg:py-40 px-6 overflow-hidden">
@@ -143,18 +147,24 @@ export function Boost() {
             </div>
 
             <div className="grid grid-cols-3 gap-3 mb-6">
-              {[
-                { v: "x4", l: "Visibilidad" },
-                { v: "+38%", l: "Matches" },
-                { v: "12", l: "Drops/sem" },
-              ].map((s) => (
-                <div key={s.l} className="text-center bg-white/5 border border-white/10 rounded-xl py-4">
-                  <p className="text-2xl font-extrabold bg-gradient-to-b from-white to-emerald-200 bg-clip-text text-transparent">
-                    {s.v}
-                  </p>
-                  <p className="text-[10px] text-emerald-200/60 uppercase tracking-wider font-bold mt-0.5">{s.l}</p>
-                </div>
-              ))}
+              {stats.map((s) => {
+                const value = Math.round(s.target * t);
+                return (
+                  <div
+                    key={s.label}
+                    className="text-center bg-white/5 border border-white/10 rounded-xl py-4"
+                  >
+                    <p className="text-2xl font-extrabold bg-gradient-to-b from-white to-emerald-200 bg-clip-text text-transparent tabular-nums">
+                      {s.prefix}
+                      {value}
+                      {s.suffix}
+                    </p>
+                    <p className="text-[10px] text-emerald-200/60 uppercase tracking-wider font-bold mt-0.5">
+                      {s.label}
+                    </p>
+                  </div>
+                );
+              })}
             </div>
 
             <div className="space-y-2.5">
