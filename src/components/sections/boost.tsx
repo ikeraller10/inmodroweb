@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Rocket, Video, Filter, TrendingUp, Check } from "lucide-react";
 
 const PROGRESS_TARGET = 87;
@@ -46,11 +46,67 @@ function useAnimatedProgress(duration: number) {
   return { t, ref };
 }
 
+const cardVariants: Variants = {
+  rest: { y: 0, scale: 1 },
+  hover: { y: -4, scale: 1.025 },
+};
+
+const filterIconVariants: Variants = {
+  rest: { rotate: 0 },
+  hover: {
+    rotate: [0, -15, 15, -10, 10, 0],
+    transition: { duration: 0.7, ease: "easeInOut" },
+  },
+};
+
+const videoIconVariants: Variants = {
+  rest: { scale: 1 },
+  hover: {
+    scale: [1, 1.2, 1, 1.15, 1],
+    transition: { duration: 0.8, ease: "easeInOut" },
+  },
+};
+
+const trendingIconVariants: Variants = {
+  rest: { y: 0, x: 0 },
+  hover: {
+    y: [0, -2, 0],
+    x: [0, 1, 0],
+    transition: { duration: 0.5, ease: "easeOut", repeat: 1 },
+  },
+};
+
+const rocketIconVariants: Variants = {
+  rest: { y: 0, rotate: 0, scale: 1 },
+  hover: {
+    y: -10,
+    rotate: 18,
+    scale: 1.05,
+    transition: { type: "spring", stiffness: 220, damping: 14 },
+  },
+};
+
 const features = [
-  { icon: Filter, label: "Filtros extras avanzados" },
-  { icon: Video, label: "Vídeo + imagen de presentación" },
-  { icon: TrendingUp, label: "Más visibilidad para tus drops" },
-  { icon: Rocket, label: "Drops mejor filtrados y prioritarios" },
+  {
+    icon: Filter,
+    label: "Filtros extras avanzados",
+    iconVariants: filterIconVariants,
+  },
+  {
+    icon: Video,
+    label: "Vídeo + imagen de presentación",
+    iconVariants: videoIconVariants,
+  },
+  {
+    icon: TrendingUp,
+    label: "Más visibilidad para tus drops",
+    iconVariants: trendingIconVariants,
+  },
+  {
+    icon: Rocket,
+    label: "Drops mejor filtrados y prioritarios",
+    iconVariants: rocketIconVariants,
+  },
 ];
 
 const stats = [
@@ -101,18 +157,52 @@ export function Boost() {
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-10">
-            {features.map((f) => {
+            {features.map((f, i) => {
               const Icon = f.icon;
               return (
-                <div
+                <motion.div
                   key={f.label}
-                  className="flex items-center gap-3 bg-white/5 border border-white/10 backdrop-blur-md rounded-xl p-4 hover:bg-white/10 transition"
+                  variants={cardVariants}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  whileHover="hover"
+                  animate="rest"
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{
+                    duration: 0.55,
+                    delay: i * 0.08,
+                    ease: [0.25, 0.4, 0.25, 1],
+                  }}
+                  className="group flex items-center gap-3 bg-white/5 border border-white/10 backdrop-blur-md rounded-xl p-4 cursor-default overflow-hidden relative"
                 >
-                  <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shrink-0 shadow-lg shadow-emerald-500/30">
-                    <Icon className="w-4 h-4 text-white" strokeWidth={2.5} />
+                  <div className="absolute inset-0 bg-gradient-to-br from-emerald-400/0 via-emerald-400/0 to-emerald-400/15 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+                  <div className="relative w-9 h-9 rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shrink-0 shadow-lg shadow-emerald-500/30 overflow-visible">
+                    <motion.span
+                      className="absolute inset-0 rounded-lg bg-emerald-300/40 blur-md"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      variants={{
+                        rest: { opacity: 0, scale: 0.8 },
+                        hover: { opacity: 1, scale: 1.4 },
+                      }}
+                      transition={{ duration: 0.4 }}
+                      aria-hidden="true"
+                    />
+                    <motion.span
+                      variants={f.iconVariants}
+                      className="relative z-10 inline-flex"
+                    >
+                      <Icon
+                        className="w-4 h-4 text-white"
+                        strokeWidth={2.5}
+                      />
+                    </motion.span>
                   </div>
-                  <span className="text-sm font-medium text-white">{f.label}</span>
-                </div>
+
+                  <span className="text-sm font-medium text-white relative">
+                    {f.label}
+                  </span>
+                </motion.div>
               );
             })}
           </div>
