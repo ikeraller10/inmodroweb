@@ -28,14 +28,14 @@ function bubbleClasses(distance: number | null) {
 function BubbleHeading() {
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
-  const segments: { text: string; className?: string }[] = [
+  const segments: { text: string; gradient?: boolean }[] = [
     { text: "Buscar piso ya no tiene" },
-    { text: "por qué durar semanas", className: "gradient-text" },
+    { text: "por qué durar semanas", gradient: true },
   ];
 
   let globalIdx = 0;
 
-  const renderLine = (line: string) => {
+  const renderLine = (line: string, applyGradient: boolean) => {
     const words = line.split(" ");
     return words.map((word, wIdx) => {
       const wordSpans = word.split("").map((char) => {
@@ -43,11 +43,14 @@ function BubbleHeading() {
         globalIdx += 1;
         const distance =
           hoveredIdx !== null ? Math.abs(hoveredIdx - idx) : null;
+        const finalClasses = applyGradient
+          ? `${bubbleClasses(distance)} gradient-text`
+          : bubbleClasses(distance);
         return (
           <span
             key={idx}
             onMouseEnter={() => setHoveredIdx(idx)}
-            className={bubbleClasses(distance)}
+            className={finalClasses}
           >
             {char}
           </span>
@@ -73,11 +76,8 @@ function BubbleHeading() {
       className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-balance"
     >
       {segments.map((seg, i) => (
-        <span
-          key={i}
-          className={`block${seg.className ? ` ${seg.className}` : ""}`}
-        >
-          {renderLine(seg.text)}
+        <span key={i} className="block">
+          {renderLine(seg.text, !!seg.gradient)}
         </span>
       ))}
     </h2>
