@@ -32,7 +32,7 @@ export const MagicText: React.FC<MagicTextProps> = ({ text, className }) => {
 
   const { scrollYProgress } = useScroll({
     target: container,
-    offset: ["start 0.9", "start 0.25"],
+    offset: ["start 0.95", "end 0.35"],
   });
 
   const words = text.split(" ");
@@ -41,7 +41,7 @@ export const MagicText: React.FC<MagicTextProps> = ({ text, className }) => {
     <p
       ref={container}
       className={cn(
-        "flex flex-wrap justify-center max-w-5xl mx-auto px-6 leading-[1.2] py-16",
+        "flex flex-wrap justify-center max-w-5xl mx-auto px-6 leading-[1.3] py-32 lg:py-40",
         className
       )}
     >
