@@ -1,7 +1,88 @@
 "use client";
 
+import { useState } from "react";
 import { UserPlus, Sparkles, Heart, MessageCircle, ArrowRight } from "lucide-react";
 import { GlowCard } from "@/components/ui/spotlight-card";
+
+function bubbleClasses(distance: number | null) {
+  let classes = "inline-block transition-all duration-300 ease-out cursor-default";
+  switch (distance) {
+    case 0:
+      classes += " font-black scale-110";
+      break;
+    case 1:
+      classes += " font-extrabold scale-105";
+      break;
+    case 2:
+      classes += " font-bold";
+      break;
+    case 3:
+      classes += " font-semibold";
+      break;
+    default:
+      break;
+  }
+  return classes;
+}
+
+function BubbleHeading() {
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+
+  const segments: { text: string; className?: string }[] = [
+    { text: "Buscar piso ya no tiene" },
+    { text: "por qué durar semanas", className: "gradient-text" },
+  ];
+
+  let globalIdx = 0;
+
+  const renderLine = (line: string) => {
+    const words = line.split(" ");
+    return words.map((word, wIdx) => {
+      const wordSpans = word.split("").map((char) => {
+        const idx = globalIdx;
+        globalIdx += 1;
+        const distance =
+          hoveredIdx !== null ? Math.abs(hoveredIdx - idx) : null;
+        return (
+          <span
+            key={idx}
+            onMouseEnter={() => setHoveredIdx(idx)}
+            className={bubbleClasses(distance)}
+          >
+            {char}
+          </span>
+        );
+      });
+
+      const isLast = wIdx === words.length - 1;
+      const space = !isLast ? <span key={`sp-${wIdx}`}> </span> : null;
+      if (!isLast) globalIdx += 1;
+
+      return (
+        <span key={`w-${wIdx}`}>
+          <span className="inline-block whitespace-nowrap">{wordSpans}</span>
+          {space}
+        </span>
+      );
+    });
+  };
+
+  return (
+    <h2
+      onMouseLeave={() => setHoveredIdx(null)}
+      className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-balance"
+    >
+      {segments.map((seg, i) => (
+        <span
+          key={i}
+          className={`block${seg.className ? ` ${seg.className}` : ""}`}
+        >
+          {renderLine(seg.text)}
+        </span>
+      ))}
+    </h2>
+  );
+}
 
 const steps = [
   {
@@ -43,11 +124,7 @@ export function HowItWorks() {
           <span className="inline-block text-xs uppercase tracking-[0.3em] font-bold text-emerald-600 mb-4">
             ¿Cómo funciona?
           </span>
-          <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-balance">
-            Buscar piso ya no tiene
-            <br />
-            <span className="gradient-text">por qué durar semanas</span>
-          </h2>
+          <BubbleHeading />
           <p className="text-lg text-foreground/60 max-w-2xl mx-auto font-light leading-relaxed">
             Olvida los portales de siempre. Recibe propuestas que encajan contigo y haz match en cuatro pasos.
           </p>
