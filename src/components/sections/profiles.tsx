@@ -2,6 +2,7 @@
 
 import { Search, ShoppingBag, KeyRound, Building2, ArrowUpRight } from "lucide-react";
 import { ZoomParallax } from "@/components/ui/zoom-parallax";
+import { TextRevealByWord } from "@/components/ui/text-reveal-by-word";
 
 const parallaxImages = [
   { src: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1600&q=80", alt: "Loft moderno" },
@@ -106,6 +107,8 @@ export function Profiles() {
           </div>
         </div>
       </div>
+
+      <TextRevealByWord text="Inmodrop conecta cada perfil con su match. Inquilinos, compradores, propietarios e inmobiliarias. Sin anuncios masivos, sin spam, sin ruido. Solo drops que de verdad encajan." />
 
       <ZoomParallax images={parallaxImages} />
 
