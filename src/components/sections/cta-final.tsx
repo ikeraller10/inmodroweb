@@ -1,9 +1,64 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { BubbleText } from "@/components/ui/bubble-text";
 
+const DURATION = 2400;
+
+const stats: { display: (t: number) => string; label: string }[] = [
+  {
+    label: "Perfiles activos",
+    display: (t) => `+${(2.5 * t).toFixed(1)}K`,
+  },
+  {
+    label: "Matches/mes",
+    display: (t) => `+${Math.round(850 * t)}`,
+  },
+  {
+    label: "Tiempo medio match",
+    display: (t) => `<${Math.round(48 * t)}h`,
+  },
+];
+
+function useAnimatedProgress(duration: number) {
+  const [t, setT] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const started = useRef(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || started.current) return;
+        started.current = true;
+
+        const start = performance.now();
+        const easeOutCubic = (x: number) => 1 - Math.pow(1 - x, 3);
+
+        let frame = 0;
+        const tick = (now: number) => {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          setT(easeOutCubic(progress));
+          if (progress < 1) frame = requestAnimationFrame(tick);
+        };
+        frame = requestAnimationFrame(tick);
+        return () => cancelAnimationFrame(frame);
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [duration]);
+
+  return { t, ref };
+}
+
 export function CTAFinal() {
+  const { t, ref: statsRef } = useAnimatedProgress(DURATION);
+
   return (
     <section id="registro" className="relative py-28 lg:py-40 px-6 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-500 via-emerald-600 to-teal-700" />
@@ -41,15 +96,18 @@ export function CTAFinal() {
           </a>
         </div>
 
-        <div className="mt-16 flex items-center justify-center gap-8 lg:gap-16 flex-wrap">
-          {[
-            { n: "+2.5K", l: "Perfiles activos" },
-            { n: "+850", l: "Matches/mes" },
-            { n: "<48h", l: "Tiempo medio match" },
-          ].map((s) => (
-            <div key={s.l} className="text-center">
-              <p className="text-3xl lg:text-5xl font-black text-white tracking-tight">{s.n}</p>
-              <p className="text-xs lg:text-sm uppercase tracking-widest text-white/70 font-bold mt-1">{s.l}</p>
+        <div
+          ref={statsRef}
+          className="mt-16 flex items-center justify-center gap-8 lg:gap-16 flex-wrap"
+        >
+          {stats.map((s) => (
+            <div key={s.label} className="text-center">
+              <p className="text-3xl lg:text-5xl font-black text-white tracking-tight tabular-nums">
+                {s.display(t)}
+              </p>
+              <p className="text-xs lg:text-sm uppercase tracking-widest text-white/70 font-bold mt-1">
+                {s.label}
+              </p>
             </div>
           ))}
         </div>
