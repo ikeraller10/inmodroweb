@@ -92,23 +92,15 @@ export function Profiles() {
     <section id="perfiles" className="relative bg-white">
       <div className="pt-28 lg:pt-40 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="inline-block text-xs uppercase tracking-[0.3em] font-bold text-emerald-600 mb-4">
+          <div className="text-center">
+            <span className="inline-block text-xs uppercase tracking-[0.3em] font-bold text-emerald-600">
               Para todos los perfiles
             </span>
-            <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-balance">
-              Encuentra o alquila
-              <br />
-              <span className="gradient-text">de manera fácil</span>
-            </h2>
-            <p className="text-lg text-foreground/60 max-w-2xl mx-auto font-light leading-relaxed">
-              Inquilinos, compradores, propietarios e inmobiliarias. Cada uno con su flujo. Todos con match.
-            </p>
           </div>
         </div>
       </div>
 
-      <TextRevealByWord text="Inmodrop conecta cada perfil con su match. Inquilinos, compradores, propietarios e inmobiliarias. Sin anuncios masivos, sin spam, sin ruido. Solo drops que de verdad encajan." />
+      <TextRevealByWord text="Encuentra o alquila de manera fácil. Inquilinos, compradores, propietarios e inmobiliarias. Cada uno con su flujo, todos con match." />
 
       <ZoomParallax images={parallaxImages} />
 
