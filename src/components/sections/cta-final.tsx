@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
-import { BubbleText } from "@/components/ui/bubble-text";
+import { AutoRevealingHeading } from "@/components/ui/auto-revealing-heading";
 
 const DURATION = 2400;
 
@@ -71,10 +71,13 @@ export function CTAFinal() {
           Empezar ahora · Es gratis
         </span>
 
-        <BubbleText
-          text={"¿Estás listo para hacer match\ncon tu próximo hogar?"}
-          className="text-4xl md:text-6xl lg:text-7xl mb-6 text-balance"
-        />
+        <h2 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white tracking-tight mb-6 text-balance">
+          <AutoRevealingHeading
+            text={"¿Estás listo para hacer match\ncon tu próximo hogar?"}
+            splitBy="word"
+            delay={0.08}
+          />
+        </h2>
 
         <p className="text-white/80 text-lg lg:text-xl max-w-2xl mx-auto font-light leading-relaxed mb-12">
           Crea tu perfil en menos de 2 minutos y empieza a recibir Drops compatibles contigo. Miles ya están haciendo match.
