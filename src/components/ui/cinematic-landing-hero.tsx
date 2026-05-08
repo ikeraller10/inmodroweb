@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/lib/utils";
+import { MaskedSlideReveal } from "@/components/ui/masked-slide-reveal";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -184,6 +185,7 @@ export function CinematicHero({
   const mainCardRef = useRef<HTMLDivElement>(null);
   const mockupRef = useRef<HTMLDivElement>(null);
   const requestRef = useRef<number>(0);
+  const [ctaVisible, setCtaVisible] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -267,6 +269,7 @@ export function CinematicHero({
           duration: 1.8,
         }, "pullback")
         .to(".cta-wrapper", { scale: 1, filter: "blur(0px)", ease: "expo.inOut", duration: 1.8 }, "pullback")
+        .call(() => setCtaVisible(true), undefined, "pullback")
         .to(".main-card", { y: -window.innerHeight - 300, ease: "power3.in", duration: 1.5 });
     }, containerRef);
 
@@ -302,8 +305,12 @@ export function CinematicHero({
 
       {/* CTA AT END */}
       <div className="cta-wrapper absolute z-10 flex flex-col items-center justify-center text-center w-screen px-4 gsap-reveal pointer-events-auto will-change-transform">
-        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight text-emerald-matte max-w-4xl">
-          {ctaHeading}
+        <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-tight max-w-4xl">
+          <MaskedSlideReveal
+            text={ctaHeading}
+            forceTrigger={ctaVisible}
+            wordClassName="text-emerald-matte"
+          />
         </h2>
         <p className="text-muted-foreground text-base md:text-lg mb-12 max-w-xl mx-auto font-light leading-relaxed">
           {ctaDescription}

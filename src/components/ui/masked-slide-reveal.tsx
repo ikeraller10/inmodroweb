@@ -9,6 +9,7 @@ interface MaskedSlideRevealProps {
   delay?: number;
   className?: string;
   wordClassName?: string;
+  forceTrigger?: boolean;
 }
 
 export function MaskedSlideReveal({
@@ -17,9 +18,11 @@ export function MaskedSlideReveal({
   delay = 0,
   className = "",
   wordClassName = "",
+  forceTrigger,
 }: MaskedSlideRevealProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isVisible = forceTrigger !== undefined ? forceTrigger : isInView;
 
   const words = text.split(" ");
 
@@ -50,7 +53,7 @@ export function MaskedSlideReveal({
       ref={ref}
       variants={containerVariants}
       initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
+      animate={isVisible ? "visible" : "hidden"}
       className={className}
     >
       {words.map((word, i) => (
