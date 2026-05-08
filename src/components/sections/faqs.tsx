@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
+import { MaskedSlideReveal } from "@/components/ui/masked-slide-reveal";
 
 const faqs = [
   {
@@ -45,9 +46,16 @@ export function FAQs() {
             FAQs
           </span>
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-balance">
-            Sin lios. Sin complicaciones.
-            <br />
-            <span className="gradient-text">Simple.</span>
+            <MaskedSlideReveal
+              text="Sin lios. Sin complicaciones."
+              className="block"
+            />
+            <MaskedSlideReveal
+              text="Simple."
+              className="block"
+              delay={0.45}
+              wordClassName="gradient-text"
+            />
           </h2>
         </div>
 
