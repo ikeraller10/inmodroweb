@@ -3,6 +3,7 @@
 import { Zap, ShieldCheck, EyeOff, Clock, MessageSquareHeart, Filter } from "lucide-react";
 import { MaskedSlideReveal } from "@/components/ui/masked-slide-reveal";
 import { GlowCard } from "@/components/ui/spotlight-card";
+import { ShineBorder } from "@/components/ui/shine-border";
 
 const benefits = [
   {
@@ -65,27 +66,35 @@ export function Benefits() {
           {benefits.map((b, i) => {
             const Icon = b.icon;
             return (
-              <GlowCard
+              <ShineBorder
                 key={i}
-                glowColor="green"
-                customSize
-                className="group w-full h-full min-h-[220px] p-7 lg:p-9 transition-transform duration-500 hover:-translate-y-1 bg-white/85"
+                borderRadius={24}
+                borderWidth={2}
+                duration={8}
+                color={["#34d399", "#10b981", "#a7f3d0"]}
+                className="w-full h-full"
               >
-                <div className="relative z-10 h-full flex flex-col">
-                  <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center mb-5 group-hover:bg-emerald-500 group-hover:scale-110 transition-all duration-500">
-                    <Icon
-                      className="w-6 h-6 text-emerald-600 group-hover:text-white transition-colors"
-                      strokeWidth={2.2}
-                    />
+                <GlowCard
+                  glowColor="green"
+                  customSize
+                  className="group w-full h-full min-h-[220px] p-7 lg:p-9 transition-transform duration-500 hover:-translate-y-1 bg-white/85"
+                >
+                  <div className="relative z-10 h-full flex flex-col">
+                    <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center mb-5 group-hover:bg-emerald-500 group-hover:scale-110 transition-all duration-500">
+                      <Icon
+                        className="w-6 h-6 text-emerald-600 group-hover:text-white transition-colors"
+                        strokeWidth={2.2}
+                      />
+                    </div>
+                    <h3 className="text-lg font-bold mb-2 tracking-tight">
+                      {b.title}
+                    </h3>
+                    <p className="text-sm text-foreground/60 leading-relaxed">
+                      {b.desc}
+                    </p>
                   </div>
-                  <h3 className="text-lg font-bold mb-2 tracking-tight">
-                    {b.title}
-                  </h3>
-                  <p className="text-sm text-foreground/60 leading-relaxed">
-                    {b.desc}
-                  </p>
-                </div>
-              </GlowCard>
+                </GlowCard>
+              </ShineBorder>
             );
           })}
         </div>
