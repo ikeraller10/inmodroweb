@@ -40,19 +40,21 @@ export const GlowCard: React.FC<GlowCardProps> = ({
 
   useEffect(() => {
     const syncPointer = (e: PointerEvent) => {
-      const { clientX: x, clientY: y } = e;
-      if (cardRef.current) {
-        cardRef.current.style.setProperty("--x", x.toFixed(2));
-        cardRef.current.style.setProperty(
-          "--xp",
-          (x / window.innerWidth).toFixed(2)
-        );
-        cardRef.current.style.setProperty("--y", y.toFixed(2));
-        cardRef.current.style.setProperty(
-          "--yp",
-          (y / window.innerHeight).toFixed(2)
-        );
-      }
+      const card = cardRef.current;
+      if (!card) return;
+      const rect = card.getBoundingClientRect();
+      const localX = e.clientX - rect.left;
+      const localY = e.clientY - rect.top;
+      card.style.setProperty("--x", localX.toFixed(2));
+      card.style.setProperty("--y", localY.toFixed(2));
+      card.style.setProperty(
+        "--xp",
+        (e.clientX / window.innerWidth).toFixed(2)
+      );
+      card.style.setProperty(
+        "--yp",
+        (e.clientY / window.innerHeight).toFixed(2)
+      );
     };
     document.addEventListener("pointermove", syncPointer);
     return () => document.removeEventListener("pointermove", syncPointer);
@@ -89,10 +91,9 @@ export const GlowCard: React.FC<GlowCardProps> = ({
       hsl(var(--hue, 145) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 60) * 1%) / var(--bg-spot-opacity, 0.35)), transparent
     )`,
     backgroundColor: "var(--backdrop, transparent)",
-    backgroundSize:
-      "calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)))",
-    backgroundPosition: "50% 50%",
-    backgroundAttachment: "fixed",
+    backgroundSize: "100% 100%",
+    backgroundPosition: "0 0",
+    backgroundRepeat: "no-repeat",
     border: "var(--border-size) solid var(--backup-border)",
     position: "relative",
     touchAction: "none",
@@ -116,10 +117,9 @@ export const GlowCard: React.FC<GlowCardProps> = ({
       inset: calc(var(--border-size) * -1);
       border: var(--border-size) solid transparent;
       border-radius: calc(var(--radius) * 1px);
-      background-attachment: fixed;
-      background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
+      background-size: 100% 100%;
       background-repeat: no-repeat;
-      background-position: 50% 50%;
+      background-position: 0 0;
       mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
       -webkit-mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
       mask-clip: padding-box, border-box;
@@ -130,8 +130,8 @@ export const GlowCard: React.FC<GlowCardProps> = ({
     [data-glow]::before {
       background-image: radial-gradient(
         calc(var(--spotlight-size) * 0.75) calc(var(--spotlight-size) * 0.75) at
-        calc(var(--x, 0) * 1px)
-        calc(var(--y, 0) * 1px),
+        calc((var(--x, 0) + var(--border)) * 1px)
+        calc((var(--y, 0) + var(--border)) * 1px),
         hsl(var(--hue, 145) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) / var(--border-spot-opacity, 1)), transparent 100%
       );
       filter: brightness(2);
@@ -139,8 +139,8 @@ export const GlowCard: React.FC<GlowCardProps> = ({
     [data-glow]::after {
       background-image: radial-gradient(
         calc(var(--spotlight-size) * 0.5) calc(var(--spotlight-size) * 0.5) at
-        calc(var(--x, 0) * 1px)
-        calc(var(--y, 0) * 1px),
+        calc((var(--x, 0) + var(--border)) * 1px)
+        calc((var(--y, 0) + var(--border)) * 1px),
         hsl(0 100% 100% / var(--border-light-opacity, 1)), transparent 100%
       );
     }
