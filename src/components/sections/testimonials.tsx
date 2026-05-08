@@ -112,16 +112,6 @@ export function Testimonials() {
               key={i}
               className="group relative bg-gradient-to-br from-emerald-50/50 to-white border border-emerald-100/80 rounded-3xl p-8 lg:p-10 shadow-[0_4px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_40px_90px_rgba(16,185,129,0.22)]"
             >
-              {/* Holographic radial glow that follows the cursor */}
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{
-                  background:
-                    "radial-gradient(420px circle at var(--mx) var(--my), rgba(16,185,129,0.09), rgba(167,243,208,0.03) 35%, transparent 60%)",
-                }}
-              />
-
               {/* Diagonal sheen for the 'holo' shimmer */}
               <span
                 aria-hidden="true"
