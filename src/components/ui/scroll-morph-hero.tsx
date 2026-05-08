@@ -61,15 +61,14 @@ function FlipCard({ src, index, target }: FlipCardProps) {
 
         {/* Back */}
         <div
-          className="absolute inset-0 h-full w-full overflow-hidden rounded-xl shadow-lg bg-gradient-to-br from-emerald-700 to-emerald-900 flex flex-col items-center justify-center p-3 border border-emerald-500/30"
+          className="absolute inset-0 h-full w-full overflow-hidden rounded-xl shadow-lg shadow-emerald-900/20"
           style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
         >
-          <p className="text-[8px] font-bold text-emerald-300 uppercase tracking-widest mb-1">
-            Drop
-          </p>
-          <p className="text-xs font-semibold text-white text-center leading-tight">
-            Ver detalles
-          </p>
+          <img
+            src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&q=80"
+            alt="Casa de lujo"
+            className="h-full w-full object-cover"
+          />
         </div>
       </motion.div>
     </motion.div>
