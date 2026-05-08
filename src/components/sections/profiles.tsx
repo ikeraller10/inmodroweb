@@ -5,7 +5,7 @@ import { MagicText } from "@/components/ui/magic-text";
 import { MaskedSlideReveal } from "@/components/ui/masked-slide-reveal";
 
 const parallaxImages = [
-  { src: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1600&q=80", alt: "Loft moderno" },
+  { src: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1920&q=85", alt: "Mansión de lujo con piscina" },
   { src: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?w=1200&q=80", alt: "Salón con vistas" },
   { src: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80", alt: "Edificio moderno" },
   { src: "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=1200&q=80", alt: "Cocina luminosa" },
