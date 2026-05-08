@@ -69,11 +69,16 @@ export const GlowCard: React.FC<GlowCardProps> = ({
     "--base": base,
     "--spread": spread,
     "--radius": "24",
-    "--border": "2",
-    "--backdrop": "hsl(150 60% 96% / 0.6)",
-    "--backup-border": "hsl(150 70% 85% / 0.5)",
-    "--size": "220",
+    "--border": "3",
+    "--backdrop": "rgba(255, 255, 255, 0.55)",
+    "--backup-border": "var(--backdrop)",
+    "--size": "340",
     "--outer": "1",
+    "--saturation": "100",
+    "--lightness": "55",
+    "--bg-spot-opacity": "0.35",
+    "--border-spot-opacity": "1",
+    "--border-light-opacity": "1",
     "--border-size": "calc(var(--border, 2) * 1px)",
     "--spotlight-size": "calc(var(--size, 150) * 1px)",
     "--hue": "calc(var(--base) + (var(--xp, 0) * var(--spread, 0)))",
@@ -81,7 +86,7 @@ export const GlowCard: React.FC<GlowCardProps> = ({
       var(--spotlight-size) var(--spotlight-size) at
       calc(var(--x, 0) * 1px)
       calc(var(--y, 0) * 1px),
-      hsl(var(--hue, 145) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 70) * 1%) / var(--bg-spot-opacity, 0.12)), transparent
+      hsl(var(--hue, 145) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 60) * 1%) / var(--bg-spot-opacity, 0.35)), transparent
     )`,
     backgroundColor: "var(--backdrop, transparent)",
     backgroundSize:
