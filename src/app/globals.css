@@ -55,6 +55,37 @@
   }
 }
 
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes gradient-border-rotate {
+  to {
+    --gradient-angle: 360deg;
+  }
+}
+
+.gradient-border-auto {
+  animation: gradient-border-rotate var(--animation-duration, 5s) linear infinite;
+}
+
+.gradient-border-hover {
+  animation: gradient-border-rotate var(--animation-duration, 5s) linear infinite;
+  animation-play-state: paused;
+}
+.gradient-border-hover:hover {
+  animation-play-state: running;
+}
+
+.gradient-border-stop-hover {
+  animation: gradient-border-rotate var(--animation-duration, 5s) linear infinite;
+}
+.gradient-border-stop-hover:hover {
+  animation-play-state: paused;
+}
+
 @layer utilities {
   .transform-style-3d {
     transform-style: preserve-3d;

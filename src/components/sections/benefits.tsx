@@ -2,7 +2,7 @@
 
 import { Zap, ShieldCheck, EyeOff, Clock, MessageSquareHeart, Filter } from "lucide-react";
 import { MaskedSlideReveal } from "@/components/ui/masked-slide-reveal";
-import { GlowCard } from "@/components/ui/spotlight-card";
+import { BorderRotate } from "@/components/ui/border-rotate";
 
 const benefits = [
   {
@@ -37,6 +37,12 @@ const benefits = [
   },
 ];
 
+const greenGradient = {
+  primary: "#064e3b",
+  secondary: "#10b981",
+  accent: "#a7f3d0",
+};
+
 export function Benefits() {
   return (
     <section id="beneficios" className="relative py-28 lg:py-40 px-6 bg-gradient-to-b from-emerald-50/30 via-white to-white overflow-hidden">
@@ -65,13 +71,17 @@ export function Benefits() {
           {benefits.map((b, i) => {
             const Icon = b.icon;
             return (
-              <GlowCard
+              <BorderRotate
                 key={i}
-                glowColor="green"
-                customSize
-                className="group w-full h-full min-h-[220px] p-7 lg:p-9 transition-transform duration-500 hover:-translate-y-1 bg-white/85"
+                animationMode="auto-rotate"
+                animationSpeed={6}
+                gradientColors={greenGradient}
+                backgroundColor="#ffffff"
+                borderWidth={2}
+                borderRadius={24}
+                className="group w-full min-h-[220px] p-7 lg:p-9 shadow-[0_4px_30px_rgba(16,185,129,0.06)] transition-transform duration-500 hover:-translate-y-1"
               >
-                <div className="relative z-10 h-full flex flex-col">
+                <div className="relative h-full flex flex-col">
                   <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center mb-5 group-hover:bg-emerald-500 group-hover:scale-110 transition-all duration-500">
                     <Icon
                       className="w-6 h-6 text-emerald-600 group-hover:text-white transition-colors"
@@ -85,7 +95,7 @@ export function Benefits() {
                     {b.desc}
                   </p>
                 </div>
-              </GlowCard>
+              </BorderRotate>
             );
           })}
         </div>
