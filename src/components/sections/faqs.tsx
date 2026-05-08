@@ -3,6 +3,13 @@
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
 import { MaskedSlideReveal } from "@/components/ui/masked-slide-reveal";
+import { BorderRotate } from "@/components/ui/border-rotate";
+
+const greenGradient = {
+  primary: "#064e3b",
+  secondary: "#10b981",
+  accent: "#a7f3d0",
+};
 
 const faqs = [
   {
@@ -63,10 +70,18 @@ export function FAQs() {
           {faqs.map((f, i) => {
             const isOpen = open === i;
             return (
-              <div
+              <BorderRotate
                 key={i}
-                className={`bg-white border rounded-2xl overflow-hidden transition-all duration-500 ${
-                  isOpen ? "border-emerald-300 shadow-[0_20px_60px_rgba(16,185,129,0.12)]" : "border-emerald-100/80 shadow-sm"
+                animationMode="auto-rotate"
+                animationSpeed={7}
+                gradientColors={greenGradient}
+                backgroundColor="#ffffff"
+                borderWidth={2}
+                borderRadius={16}
+                className={`overflow-hidden transition-shadow duration-500 ${
+                  isOpen
+                    ? "shadow-[0_20px_60px_rgba(16,185,129,0.12)]"
+                    : "shadow-sm"
                 }`}
               >
                 <button
@@ -74,12 +89,18 @@ export function FAQs() {
                   className="w-full flex items-center justify-between gap-4 p-6 text-left"
                   aria-expanded={isOpen}
                 >
-                  <span className={`text-base lg:text-lg font-bold tracking-tight transition-colors ${isOpen ? "text-emerald-700" : "text-foreground"}`}>
+                  <span
+                    className={`text-base lg:text-lg font-bold tracking-tight transition-colors ${
+                      isOpen ? "text-emerald-700" : "text-foreground"
+                    }`}
+                  >
                     {f.q}
                   </span>
                   <span
                     className={`shrink-0 w-9 h-9 rounded-full flex items-center justify-center transition-all ${
-                      isOpen ? "bg-emerald-500 text-white rotate-180" : "bg-emerald-50 text-emerald-600"
+                      isOpen
+                        ? "bg-emerald-500 text-white rotate-180"
+                        : "bg-emerald-50 text-emerald-600"
                     }`}
                   >
                     {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
@@ -91,10 +112,12 @@ export function FAQs() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="px-6 pb-6 text-foreground/65 text-base leading-relaxed">{f.a}</p>
+                    <p className="px-6 pb-6 text-foreground/65 text-base leading-relaxed">
+                      {f.a}
+                    </p>
                   </div>
                 </div>
-              </div>
+              </BorderRotate>
             );
           })}
         </div>

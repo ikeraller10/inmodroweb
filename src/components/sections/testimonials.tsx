@@ -118,17 +118,17 @@ export function Testimonials() {
                 className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{
                   background:
-                    "radial-gradient(420px circle at var(--mx) var(--my), rgba(16,185,129,0.18), rgba(167,243,208,0.06) 35%, transparent 60%)",
+                    "radial-gradient(420px circle at var(--mx) var(--my), rgba(16,185,129,0.09), rgba(167,243,208,0.03) 35%, transparent 60%)",
                 }}
               />
 
               {/* Diagonal sheen for the 'holo' shimmer */}
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-500 mix-blend-overlay"
+                className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-40 transition-opacity duration-500 mix-blend-overlay"
                 style={{
                   background:
-                    "linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.45) 50%, transparent 65%)",
+                    "linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.35) 50%, transparent 65%)",
                   backgroundSize: "200% 200%",
                   backgroundPosition: "var(--mx) var(--my)",
                 }}
