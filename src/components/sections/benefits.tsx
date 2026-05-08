@@ -2,6 +2,7 @@
 
 import { Zap, ShieldCheck, EyeOff, Clock, MessageSquareHeart, Filter } from "lucide-react";
 import { MaskedSlideReveal } from "@/components/ui/masked-slide-reveal";
+import { GlowCard } from "@/components/ui/spotlight-card";
 
 const benefits = [
   {
@@ -60,20 +61,31 @@ export function Benefits() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-emerald-100/60 rounded-3xl overflow-hidden border border-emerald-100/60">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
           {benefits.map((b, i) => {
             const Icon = b.icon;
             return (
-              <div
+              <GlowCard
                 key={i}
-                className="group bg-white p-8 lg:p-10 hover:bg-gradient-to-br hover:from-emerald-50 hover:to-white transition-colors"
+                glowColor="green"
+                customSize
+                className="group w-full h-full min-h-[220px] p-7 lg:p-9 transition-transform duration-500 hover:-translate-y-1 bg-white/85"
               >
-                <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center mb-5 group-hover:bg-emerald-500 group-hover:scale-110 transition-all duration-500">
-                  <Icon className="w-6 h-6 text-emerald-600 group-hover:text-white transition-colors" strokeWidth={2.2} />
+                <div className="relative z-10 h-full flex flex-col">
+                  <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center mb-5 group-hover:bg-emerald-500 group-hover:scale-110 transition-all duration-500">
+                    <Icon
+                      className="w-6 h-6 text-emerald-600 group-hover:text-white transition-colors"
+                      strokeWidth={2.2}
+                    />
+                  </div>
+                  <h3 className="text-lg font-bold mb-2 tracking-tight">
+                    {b.title}
+                  </h3>
+                  <p className="text-sm text-foreground/60 leading-relaxed">
+                    {b.desc}
+                  </p>
                 </div>
-                <h3 className="text-lg font-bold mb-2 tracking-tight">{b.title}</h3>
-                <p className="text-sm text-foreground/60 leading-relaxed">{b.desc}</p>
-              </div>
+              </GlowCard>
             );
           })}
         </div>
