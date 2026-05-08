@@ -74,13 +74,13 @@ export const GlowCard: React.FC<GlowCardProps> = ({
     "--border": "3",
     "--backdrop": "rgba(255, 255, 255, 0.55)",
     "--backup-border": "var(--backdrop)",
-    "--size": "340",
+    "--size": "300",
     "--outer": "1",
     "--saturation": "100",
-    "--lightness": "55",
-    "--bg-spot-opacity": "0.35",
-    "--border-spot-opacity": "1",
-    "--border-light-opacity": "1",
+    "--lightness": "60",
+    "--bg-spot-opacity": "0.18",
+    "--border-spot-opacity": "0.95",
+    "--border-light-opacity": "0.85",
     "--border-size": "calc(var(--border, 2) * 1px)",
     "--spotlight-size": "calc(var(--size, 150) * 1px)",
     "--hue": "calc(var(--base) + (var(--xp, 0) * var(--spread, 0)))",
@@ -88,7 +88,7 @@ export const GlowCard: React.FC<GlowCardProps> = ({
       var(--spotlight-size) var(--spotlight-size) at
       calc(var(--x, 0) * 1px)
       calc(var(--y, 0) * 1px),
-      hsl(var(--hue, 145) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 60) * 1%) / var(--bg-spot-opacity, 0.35)), transparent
+      hsl(var(--hue, 145) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 60) * 1%) / var(--bg-spot-opacity, 0.18)), transparent
     )`,
     backgroundColor: "var(--backdrop, transparent)",
     backgroundSize: "100% 100%",
@@ -115,17 +115,18 @@ export const GlowCard: React.FC<GlowCardProps> = ({
       content: "";
       position: absolute;
       inset: calc(var(--border-size) * -1);
-      border: var(--border-size) solid transparent;
       border-radius: calc(var(--radius) * 1px);
       background-size: 100% 100%;
       background-repeat: no-repeat;
       background-position: 0 0;
-      mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
-      -webkit-mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
-      mask-clip: padding-box, border-box;
-      -webkit-mask-clip: padding-box, border-box;
-      mask-composite: intersect;
-      -webkit-mask-composite: source-in, xor;
+      mask:
+        linear-gradient(white, white) padding-box,
+        linear-gradient(white, white) border-box;
+      -webkit-mask:
+        linear-gradient(white, white) padding-box,
+        linear-gradient(white, white) border-box;
+      mask-composite: exclude;
+      -webkit-mask-composite: xor;
     }
     [data-glow]::before {
       background-image: radial-gradient(
@@ -134,14 +135,14 @@ export const GlowCard: React.FC<GlowCardProps> = ({
         calc((var(--y, 0) + var(--border)) * 1px),
         hsl(var(--hue, 145) calc(var(--saturation, 100) * 1%) calc(var(--lightness, 50) * 1%) / var(--border-spot-opacity, 1)), transparent 100%
       );
-      filter: brightness(2);
+      filter: brightness(1.8);
     }
     [data-glow]::after {
       background-image: radial-gradient(
         calc(var(--spotlight-size) * 0.5) calc(var(--spotlight-size) * 0.5) at
         calc((var(--x, 0) + var(--border)) * 1px)
         calc((var(--y, 0) + var(--border)) * 1px),
-        hsl(0 100% 100% / var(--border-light-opacity, 1)), transparent 100%
+        hsl(0 100% 100% / var(--border-light-opacity, 0.85)), transparent 100%
       );
     }
     [data-glow] [data-glow] {
