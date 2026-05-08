@@ -1,6 +1,7 @@
 "use client";
 
 import { Zap, ShieldCheck, EyeOff, Clock, MessageSquareHeart, Filter } from "lucide-react";
+import { MaskedSlideReveal } from "@/components/ui/masked-slide-reveal";
 
 const benefits = [
   {
@@ -46,9 +47,16 @@ export function Benefits() {
             Beneficios
           </span>
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-balance">
-            No busques sin sentido,
-            <br />
-            <span className="gradient-text">haz MATCH.</span>
+            <MaskedSlideReveal
+              text="No busques sin sentido,"
+              className="block"
+            />
+            <MaskedSlideReveal
+              text="haz MATCH."
+              className="block"
+              delay={0.4}
+              wordClassName="gradient-text"
+            />
           </h2>
         </div>
 

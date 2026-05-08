@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { Quote, Star } from "lucide-react";
+import { MaskedSlideReveal } from "@/components/ui/masked-slide-reveal";
 
 const testimonials = [
   {
@@ -89,9 +90,16 @@ export function Testimonials() {
             Historias reales
           </span>
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-balance">
-            Gente que hizo match
-            <br />
-            y ya está en su <span className="gradient-text">nuevo piso</span>
+            <MaskedSlideReveal
+              text="Gente que hizo match"
+              className="block"
+            />
+            <MaskedSlideReveal text="y ya está en su" delay={0.45} />{" "}
+            <MaskedSlideReveal
+              text="nuevo piso"
+              delay={0.9}
+              wordClassName="gradient-text"
+            />
           </h2>
           <p className="text-lg text-foreground/60 max-w-2xl mx-auto font-light">
             ¿Tu historia será la próxima?
