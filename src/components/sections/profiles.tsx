@@ -3,6 +3,7 @@
 import { Search, ShoppingBag, KeyRound, Building2, ArrowUpRight } from "lucide-react";
 import { ZoomParallax } from "@/components/ui/zoom-parallax";
 import { MagicText } from "@/components/ui/magic-text";
+import { MaskedSlideReveal } from "@/components/ui/masked-slide-reveal";
 
 const parallaxImages = [
   { src: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1600&q=80", alt: "Loft moderno" },
@@ -97,9 +98,16 @@ export function Profiles() {
               Para todos los perfiles
             </span>
             <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-balance">
-              Encuentra o alquila
-              <br />
-              <span className="gradient-text">de manera fácil</span>
+              <MaskedSlideReveal
+                text="Encuentra o alquila"
+                className="block"
+              />
+              <MaskedSlideReveal
+                text="de manera fácil"
+                className="block"
+                delay={0.4}
+                wordClassName="gradient-text"
+              />
             </h2>
             <p className="text-lg text-foreground/60 max-w-2xl mx-auto font-light leading-relaxed">
               Inquilinos, compradores, propietarios e inmobiliarias. Cada uno con su flujo. Todos con match.

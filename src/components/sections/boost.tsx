@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Rocket, Video, Filter, TrendingUp, Check } from "lucide-react";
+import { MaskedSlideReveal } from "@/components/ui/masked-slide-reveal";
 
 const PROGRESS_TARGET = 87;
 const DURATION = 3800;
@@ -145,12 +146,16 @@ export function Boost() {
             <Rocket className="w-4 h-4" /> Boost Priority
           </span>
           <h2 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6 text-white text-balance">
-            Cuanto más completo
-            <br />
-            tu perfil,{" "}
-            <span className="bg-gradient-to-r from-emerald-300 to-teal-200 bg-clip-text text-transparent">
-              más Drops recibirás
-            </span>
+            <MaskedSlideReveal
+              text="Cuanto más completo"
+              className="block"
+            />
+            <MaskedSlideReveal text="tu perfil," delay={0.4} />{" "}
+            <MaskedSlideReveal
+              text="más Drops recibirás"
+              delay={0.7}
+              wordClassName="bg-gradient-to-r from-emerald-300 to-teal-200 bg-clip-text text-transparent"
+            />
           </h2>
           <p className="text-lg text-emerald-100/70 mb-10 font-light leading-relaxed max-w-xl">
             Boost Priority desbloquea filtros extra, vídeos de presentación y más visibilidad para que tu perfil destaque entre los demás. Más matches en menos tiempo.
