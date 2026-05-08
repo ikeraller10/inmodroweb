@@ -4,6 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { Rocket, Video, Filter, TrendingUp, Check } from "lucide-react";
 import { MaskedSlideReveal } from "@/components/ui/masked-slide-reveal";
+import { BorderRotate } from "@/components/ui/border-rotate";
+
+const greenGradient = {
+  primary: "#064e3b",
+  secondary: "#10b981",
+  accent: "#a7f3d0",
+};
 
 const PROGRESS_TARGET = 87;
 const DURATION = 3800;
@@ -223,9 +230,18 @@ export function Boost() {
 
         <div className="relative">
           <div className="absolute -inset-10 bg-emerald-500/30 blur-3xl rounded-full" aria-hidden="true" />
+          <BorderRotate
+            animationMode="auto-rotate"
+            animationSpeed={6}
+            gradientColors={greenGradient}
+            backgroundColor="#031F18"
+            borderWidth={2}
+            borderRadius={32}
+            className="relative shadow-[0_30px_80px_rgba(0,0,0,0.5)]"
+          >
           <div
             ref={progressRef}
-            className="relative bg-gradient-to-br from-white/10 to-white/0 backdrop-blur-2xl border border-white/15 rounded-[32px] p-8 shadow-[0_30px_80px_rgba(0,0,0,0.5)]"
+            className="relative bg-gradient-to-br from-white/10 to-white/0 backdrop-blur-2xl rounded-[30px] p-8"
           >
             <div className="flex items-center justify-between mb-8">
               <div>
@@ -353,6 +369,7 @@ export function Boost() {
               })}
             </div>
           </div>
+          </BorderRotate>
         </div>
       </div>
     </section>

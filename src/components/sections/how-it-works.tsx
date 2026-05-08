@@ -1,8 +1,14 @@
 "use client";
 
 import { UserPlus, Sparkles, Heart, MessageCircle, ArrowRight } from "lucide-react";
-import { GlowCard } from "@/components/ui/spotlight-card";
+import { BorderRotate } from "@/components/ui/border-rotate";
 import { Typewriter } from "@/components/ui/typewriter";
+
+const greenGradient = {
+  primary: "#064e3b",
+  secondary: "#10b981",
+  accent: "#a7f3d0",
+};
 
 const steps = [
   {
@@ -67,12 +73,16 @@ export function HowItWorks() {
             const Icon = step.icon;
             return (
               <div key={i} className="relative group">
-                <GlowCard
-                  glowColor="green"
-                  customSize
-                  className="w-full h-full min-h-[260px] p-7 transition-transform duration-500 hover:-translate-y-2"
+                <BorderRotate
+                  animationMode="auto-rotate"
+                  animationSpeed={6}
+                  gradientColors={greenGradient}
+                  backgroundColor="#ffffff"
+                  borderWidth={2}
+                  borderRadius={24}
+                  className="w-full min-h-[260px] p-7 shadow-[0_4px_30px_rgba(16,185,129,0.06)] transition-transform duration-500 hover:-translate-y-2"
                 >
-                  <div className="relative z-10 h-full flex flex-col">
+                  <div className="relative h-full flex flex-col">
                     <div className="absolute top-1 right-1 text-7xl font-black text-emerald-100/70 leading-none select-none pointer-events-none">
                       0{i + 1}
                     </div>
@@ -88,10 +98,10 @@ export function HowItWorks() {
                       {step.desc}
                     </p>
                   </div>
-                </GlowCard>
+                </BorderRotate>
 
                 {i < steps.length - 1 && (
-                  <ArrowRight className="hidden lg:block absolute top-1/2 -right-4 -translate-y-1/2 w-5 h-5 text-emerald-400 z-10 drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
+                  <ArrowRight className="hidden lg:block absolute top-1/2 -right-4 -translate-y-1/2 w-5 h-5 text-emerald-400 z-20 drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]" />
                 )}
               </div>
             );
